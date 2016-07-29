@@ -4,10 +4,17 @@ angular.module('starter.controllers', [])
 .controller('ArticleCtrl', function($scope, Articles) {
   $scope.articles = Articles.all();
 })
-.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles){
-
+.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location){
+  $scope.getPost = function(){
+    // console.log("/tab/articles/"+$stateParams.categoryId+"/0");
+    // console.log("List");
+    $location.path("/tab/articles/"+$stateParams.categoryId+"/0");
+    // $location.path("/tab/test");
+  }
 })
-
+.controller('ArticleDetailInfoCtrl', function($scope){
+  console.log("Detail");
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -28,8 +35,16 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, Account, $http, $location) {
-  // $scope.account = Account.all();
+.controller('AccountCtrl', function($scope, Account, $http, $location, locals) {
+  $scope.logged = locals.get("logged");
+  console.log($scope.logged);
+  if($scope.logged == true){
+    console.log("Logged...");
+    $scope.user = locals.getObject("user");
+  }else{
+    console.log("Not Logged..");
+    $scope.user = undefined;
+  }
   $scope.signIn = function(username, password){
     var rates = $http({
          method: 'GET',
@@ -38,10 +53,18 @@ angular.module('starter.controllers', [])
          if(data["username"] == undefined){
            alert("密码错误QAQQ！");
          }else{
-          console.log("登录成功！");
-          $scope.account = data;
-          $location.path("/tab/articles")
+          locals.setObject("user", data);
+          locals.set("logged", true);
+          $scope.logged = true;
+          // locals.set("username",data.username);
+          $scope.user = data;
+          $location.path("/tab/account");
          }
       });
+  }
+  $scope.logOut = function(){
+    locals.setObject("logged", false);
+    $scope.user = undefined;
+    $location.path("/tab/account");
   }
 });

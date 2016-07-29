@@ -68,16 +68,24 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         }
       }
     })
-    .state('tab.article-detail', {
-      url: '/articles/:articleId',
+    .state('tab.article-list', {
+      url: '/articles/:categoryId',
       views: {
         'tab-articles': {
-          templateUrl: 'templates/article-detail.html',
+          templateUrl: 'templates/article-list.html',
           controller: 'ArticleDetailCtrl'
         }
       }
     })
-
+    .state('tab.articleInfo', {
+      url: '/articles/:categoryId/:articleId',
+      views: {
+        'tab-articles': {
+          templateUrl: 'templates/article-detail.html',
+          controller: 'ArticleDetailInfoCtrl'
+        }
+      }
+    })
   .state('tab.account', {
     url: '/account',
     views: {

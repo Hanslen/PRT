@@ -1,27 +1,30 @@
 <ion-view view-title="PRT内部人员通道">
   <ion-content>
     <ion-list>
-    <!-- has not logged in -->
-    <div class="list list-inset" style="margin-top:10%">
-    <label class="item item-input">
-      <input type="text" placeholder="用户名" ng-model="username">
-    </label>
-    <label class="item item-input">
-      <input type="text" placeholder="密码" ng-model="password">
-    </label>
+      <div ng-if="!user">
+        <!-- has not logged in -->
+        <div class="list list-inset" style="margin-top:10%">
+        <label class="item item-input">
+          <input type="text" placeholder="用户名" ng-model="username">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="密码" ng-model="password">
+        </label>
+      </div>
+      <button class="button button-positive" style="margin-left:35%;width:30%" ng-click="signIn(username, password)">
+        登录＝w＝
+      </button>
   </div>
-  <button class="button button-positive" style="margin-left:35%;width:30%" ng-click="signIn(username, password)">
-    登录＝w＝
-  </button>
 
 
   <!-- has logged in -->
+  <div ng-if="user">
   <div class="card">
     <div class="item item-text-wrap">
       <div class="item item-avatar">
-        <img src="{{account.image}}">
-        <h2>{{account.username}}</h2>
-       <p>已经加入PRT {{account.years}} 年了，担任 {{account.position}}</p>
+        <img src="{{user.icon}}">
+        <h2>{{user.username}}</h2>
+       <p>已经加入PRT {{user.years}} 年了，担任 {{user.position}}</p>
       </div>
     </div>
   </div>
@@ -52,8 +55,13 @@
       修改密码
     </a>
 
-  </div>
+    <a ng-click="logOut()" class="item item-icon-left">
+      <i class="icon ion-ios-close"></i>
+      退出登录
+    </a>
 
+  </div>
+</div>
 
     </ion-list>
   </ion-content>
