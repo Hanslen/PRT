@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
   $scope.articles = Articles.all();
 })
 .controller('ArticleDetailCtrl', function($scope, $stateParams, Articles){
-  
+
 })
 
 
@@ -28,6 +28,20 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, Account) {
-  $scope.account = Account.all();
+.controller('AccountCtrl', function($scope, Account, $http, $location) {
+  // $scope.account = Account.all();
+  $scope.signIn = function(username, password){
+    var rates = $http({
+         method: 'GET',
+         url: 'http://wolfprt.com/ionicServer/signIn.php?email='+username+'&password='+password
+       }).success(function(data) {
+         if(data["username"] == undefined){
+           alert("密码错误QAQQ！");
+         }else{
+          console.log("登录成功！");
+          $scope.account = data;
+          $location.path("/tab/articles")
+         }
+      });
+  }
 });
