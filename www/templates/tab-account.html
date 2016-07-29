@@ -1,0 +1,60 @@
+<ion-view view-title="PRT内部人员通道">
+  <ion-content>
+    <ion-list>
+    <!-- has not logged in -->
+    <!-- <div class="list list-inset" style="margin-top:10%">
+    <label class="item item-input">
+      <input type="text" placeholder="用户名">
+    </label>
+    <label class="item item-input">
+      <input type="text" placeholder="密码">
+    </label>
+  </div>
+  <button class="button button-positive" style="margin-left:35%;width:30%">
+    登录＝w＝
+  </button> -->
+
+
+  <!-- has logged in -->
+  <div class="card">
+    <div class="item item-text-wrap">
+      <div class="item item-avatar">
+        <img src="{{account.image}}">
+        <h2>{{account.username}}</h2>
+       <p>已经加入PRT {{account.years}} 年了，担任 {{account.position}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="list card">
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-person"></i>
+      我的故事
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-heart"></i>
+      我的收藏
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-compose"></i>
+      我的草稿
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-pricetags"></i>
+      我的徽章
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-locked"></i>
+      修改密码
+    </a>
+
+  </div>
+
+
+    </ion-list>
+  </ion-content>
+</ion-view>
