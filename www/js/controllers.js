@@ -46,27 +46,29 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute'])
 .controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location) {
   $scope.articles = Articles.all();
 })
-.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http){
+.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http, $sessionStorage){
   $scope.categoryTitle = Articles.get($stateParams.categoryId).title;
-  $scope.getPost = function(){
-    $location.path("/tab/articles/"+$stateParams.categoryId+"/0");
+  $scope.getPost = function(articleId){
+    $location.path("/tab/articles/"+$stateParams.categoryId+"/"+articleId);
   }
-  // var rates = $http({
-  //      method: 'GET',
-  //      url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent
-  //    }).success(function(data) {
-  //      if(data == '1'){
-  //        alert("发布成功！");
-  //         $location.path("/tab/articles");
-  //      }else{
-  //        alert("发布失败。。请检查网络或检查。。")
-  //      }
-  //   });
+  var rates = $http({
+       method: 'GET',
+       url: 'http://wolfprt.com/ionicServer/getArticleList.php?categoryId='+$stateParams.categoryId
+     }).success(function(data) {
+      //  console.log(data);
+       $sessionStorage.serverPosts = data;
+       $scope.serverPosts = data;
+    });
 })
-.controller('ArticleDetailInfoCtrl', function($scope, $stateParams, $location){
-  $scope.comment = function(){
-    $location.path("/tab/articles/comment/"+$stateParams.categoryId+"/0");
-  }
+.controller('ArticleDetailInfoCtrl', function($scope, $stateParams, $location, $sessionStorage){
+    for (var i = 0; i < $sessionStorage.serverPosts.length; i++) {
+      if ($sessionStorage.serverPosts[i].articleId == $stateParams.articleId) {
+          $scope.selectPost = $sessionStorage.serverPosts[i];
+      }
+    }
+  // $scope.comment = function(){
+  //   $location.path("/tab/articles/comment/"+$stateParams.categoryId+"/0");
+  // }
 })
 .controller('ArticleCommentCtrl', function($scope){})
 .controller('ChatsCtrl', function($scope, Chats, $sessionStorage, $location) {

@@ -6,20 +6,19 @@
 -->
 <ion-view view-title="{{categoryTitle}}">
   <ion-content class="padding">
-    <div class="list card" ng-click="getPost()">
+    <div class="list card" ng-click="getPost(post.articleId)" ng-repeat="post in serverPosts">
 
   <div class="item item-avatar">
-    <img src="mcfly.jpg">
-    <h2>11</h2>
-    <p>2016-06-26</p>
+    <img src={{post.image}}>
+    <h2>{{post.author}}</h2>
+    <p>{{post.postDate}}</p>
   </div>
-
   <div class="item item-body">
-    <img class="full-image" src="img/test.png">
-    <h2>P.R.T | 海风折耳畔，我从锡兰来</h2>
+    <!-- <img class="full-image" src="img/test.png"> -->
+    <h2>{{post.title}}</h2>
     <p>
       <!-- <a href="#" class="subdued">1 Like</a> -->
-      <a href="#" class="subdued">5 Comments</a>
+      <!-- <a href="#" class="subdued">5 Comments</a> -->
     </p>
   </div>
 
