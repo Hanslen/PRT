@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ngStorage', 'ngRoute'])
+angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 .controller('TabCtrl', function($scope, $sessionStorage, $location){
   $scope.logged = function(){
     if($sessionStorage.user == undefined){
