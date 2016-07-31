@@ -47,12 +47,21 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute'])
   $scope.articles = Articles.all();
 })
 .controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http){
-
   $scope.categoryTitle = Articles.get($stateParams.categoryId).title;
-  console.log($scope.categoryTitle);
   $scope.getPost = function(){
     $location.path("/tab/articles/"+$stateParams.categoryId+"/0");
   }
+  // var rates = $http({
+  //      method: 'GET',
+  //      url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent
+  //    }).success(function(data) {
+  //      if(data == '1'){
+  //        alert("发布成功！");
+  //         $location.path("/tab/articles");
+  //      }else{
+  //        alert("发布失败。。请检查网络或检查。。")
+  //      }
+  //   });
 })
 .controller('ArticleDetailInfoCtrl', function($scope, $stateParams, $location){
   $scope.comment = function(){
