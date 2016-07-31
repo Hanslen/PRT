@@ -35,7 +35,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/tabs.html',
+    controller: 'TabCtrl'
   })
 
   // Each tab has its own nav history stack:
@@ -46,6 +47,15 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       'tab-dash': {
         templateUrl: 'templates/tab-dash.html',
         controller: 'DashCtrl'
+      }
+    }
+  })
+  .state('tab.post', {
+    url: '/post',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/article-post.html',
+        controller: 'PostCtrl'
       }
     }
   })
@@ -86,17 +96,38 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         }
       }
     })
+    .state('tab.articleComment', {
+      url: '/articles/comment/:categoryId/:articleId',
+      views: {
+        'tab-articles': {
+          templateUrl: 'templates/article-comment.html',
+          controller: 'ArticleCommentCtrl'
+        }
+      }
+    })
   .state('tab.account', {
     url: '/account',
+    cache: false,
     views: {
       'tab-account': {
         templateUrl: 'templates/tab-account.html',
+        controller: 'AccountCtrl',
+        reload: true
+      }
+    }
+  })
+  .state('tab.badge', {
+    url: '/badge',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-badge.html',
         controller: 'AccountCtrl'
       }
     }
-  });
+  })
+  ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/account');
 
 });

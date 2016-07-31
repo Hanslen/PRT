@@ -2002,7 +2002,7 @@
 		margin: 0 0 1em 0;
 	}
 
-	input[type="text"],
+	/*input[type="text"],
 	input[type="password"],
 	input[type="email"],
 	select,
@@ -2020,7 +2020,7 @@
 		padding: 0 1em;
 		text-decoration: none;
 		width: 100%;
-	}
+	}*/
 
 		input[type="text"]:invalid,
 		input[type="password"]:invalid,
@@ -2029,7 +2029,7 @@
 		textarea:invalid {
 			box-shadow: none;
 		}
-
+/*
 		input[type="text"]:focus,
 		input[type="password"]:focus,
 		input[type="email"]:focus,
@@ -2037,7 +2037,7 @@
 		textarea:focus {
 			border-color: #e89980;
 			box-shadow: 0 0 0 2px #e89980;
-		}
+		}*/
 
 	.select-wrapper {
 		text-decoration: none;
@@ -3765,7 +3765,7 @@
 	margin: 0 auto;
 }
 .badge img{
-	margin-top:5px; 
+	margin-top:5px;
 	margin-bottom: 5px;
 	width: 40px;
 	float: left;

@@ -4,9 +4,9 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="PRT内部人员通道">
+<ion-view view-title="{{categoryTitle}}">
   <ion-content class="padding">
-    <div class="list card">
+    <div class="list card" ng-click="getPost()">
 
   <div class="item item-avatar">
     <img src="mcfly.jpg">
@@ -14,7 +14,7 @@
     <p>2016-06-26</p>
   </div>
 
-  <div class="item item-body" ng-click="getPost()">
+  <div class="item item-body">
     <img class="full-image" src="img/test.png">
     <h2>P.R.T | 海风折耳畔，我从锡兰来</h2>
     <p>

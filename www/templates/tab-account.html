@@ -1,4 +1,4 @@
-<ion-view view-title="PRT内部人员通道">
+<ion-view view-title="关于我">
   <ion-content>
     <ion-list>
       <div ng-if="!user">
@@ -24,7 +24,9 @@
       <div class="item item-avatar">
         <img src="{{user.icon}}">
         <h2>{{user.username}}</h2>
-       <p>已经加入PRT {{user.years}} 年了，担任 {{user.position}}</p>
+       <!-- <p>已经加入PRT {{user.years}} 年了，担任 {{user.position}}</p> -->
+
+      <p>已经加入PRT 1 年了，担任 {{user.position}}</p>
       </div>
     </div>
   </div>
@@ -45,7 +47,7 @@
       我的草稿
     </a>
 
-    <a href="#" class="item item-icon-left">
+    <a href="#/tab/badge" class="item item-icon-left">
       <i class="icon ion-ios-pricetags"></i>
       我的徽章
     </a>
@@ -53,6 +55,11 @@
     <a href="#" class="item item-icon-left">
       <i class="icon ion-ios-locked"></i>
       修改密码
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-help"></i>
+      吐槽bug
     </a>
 
     <a ng-click="logOut()" class="item item-icon-left">

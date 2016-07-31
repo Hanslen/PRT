@@ -1,30 +1,39 @@
-angular.module('starter.controllers', [])
-
-.controller('DashCtrl', function($scope) {})
-.controller('ArticleCtrl', function($scope, Articles) {
-  $scope.articles = Articles.all();
-})
-.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location){
-  $scope.getPost = function(){
-    // console.log("/tab/articles/"+$stateParams.categoryId+"/0");
-    // console.log("List");
-    $location.path("/tab/articles/"+$stateParams.categoryId+"/0");
-    // $location.path("/tab/test");
+angular.module('starter.controllers', ['ngStorage', 'ngRoute'])
+.controller('TabCtrl', function($scope, $sessionStorage, $location){
+  $scope.logged = function(){
+    if($sessionStorage.user == undefined){
+      $scope.forlogin = true;
+      return false;
+    }
+    else{
+      $scope.forlogin = false;
+      return true;
+    }
   }
 })
-.controller('ArticleDetailInfoCtrl', function($scope){
-  console.log("Detail");
+.controller('DashCtrl', function($scope, $sessionStorage, $location) {
+  console.log("Dash");
 })
+.controller('PostCtrl', function($scope){})
+.controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location) {
+  console.log("Article");
+  $scope.articles = Articles.all();
+})
+.controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http){
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
+  $scope.categoryTitle = Articles.get($stateParams.categoryId).title;
+  console.log($scope.categoryTitle);
+  $scope.getPost = function(){
+    $location.path("/tab/articles/"+$stateParams.categoryId+"/0");
+  }
+})
+.controller('ArticleDetailInfoCtrl', function($scope, $stateParams, $location){
+  $scope.comment = function(){
+    $location.path("/tab/articles/comment/"+$stateParams.categoryId+"/0");
+  }
+})
+.controller('ArticleCommentCtrl', function($scope){})
+.controller('ChatsCtrl', function($scope, Chats, $sessionStorage, $location) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
@@ -35,16 +44,16 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, Account, $http, $location, locals) {
-  $scope.logged = locals.get("logged");
-  console.log($scope.logged);
-  if($scope.logged == true){
-    console.log("Logged...");
-    $scope.user = locals.getObject("user");
-  }else{
-    console.log("Not Logged..");
-    $scope.user = undefined;
-  }
+.controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {
+  // $scope.logged = locals.get("logged");
+  // console.log($scope.logged);
+  // if($scope.logged == true){
+  //   $scope.user = locals.getObject("user");
+  // }else{
+  //   $scope.user = undefined;
+  // }
+  $scope.user = $sessionStorage.user;
+  // console.log("session: "+$sessionStorage.username);
   $scope.signIn = function(username, password){
     var rates = $http({
          method: 'GET',
@@ -53,9 +62,10 @@ angular.module('starter.controllers', [])
          if(data["username"] == undefined){
            alert("密码错误QAQQ！");
          }else{
-          locals.setObject("user", data);
-          locals.set("logged", true);
+          // locals.setObject("user", data);
+          // locals.set("logged", true);
           $scope.logged = true;
+          $sessionStorage.user = data;
           // locals.set("username",data.username);
           $scope.user = data;
           $location.path("/tab/account");
@@ -63,8 +73,9 @@ angular.module('starter.controllers', [])
       });
   }
   $scope.logOut = function(){
-    locals.setObject("logged", false);
+    // locals.setObject("logged", false);
+    delete $sessionStorage.user;
     $scope.user = undefined;
-    $location.path("/tab/account");
+    alert("退出成功。：）如果要重新登录，请刷新网页._.");
   }
 });

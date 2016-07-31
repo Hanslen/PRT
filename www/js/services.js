@@ -4,7 +4,7 @@ angular.module('starter.services', [])
   //Some fake testing data
    var articles = [{
      id: 0,
-     title: "书·读后感",
+     title: "书 · 读后感",
      read: "132",
      focus: "231",
      image: "",
@@ -46,7 +46,7 @@ angular.module('starter.services', [])
      content: "此处应有内容QwQ"
    }, {
      id: 6,
-     title: "有种·有趣·有料",
+     title: "有种 · 有趣 · 有料",
      read: "23",
      focus: "123",
      image: "",
@@ -60,28 +60,28 @@ angular.module('starter.services', [])
      content: "此处应有内容QwQ"
    }, {
      id:8,
-     title: "工作HR",
+     title: "工作 · HR",
      read: "23",
      focus: "123",
      image: "",
      content: "此处应有内容QwQ"
    }, {
      id:9,
-     title: "工作MKT",
+     title: "工作 · MKT",
      read: "23",
      focus: "123",
      image: "",
      content: "此处应有内容QwQ"
    }, {
      id:10,
-     title: "工作BC",
+     title: "工作 · BC",
      read: "23",
      focus: "123",
      image: "",
      content: "此处应有内容QwQ"
    }, {
      id:11,
-     title: "工作PR",
+     title: "工作 · PR",
      read: "23",
      focus: "123",
      image: "",
