@@ -2,21 +2,33 @@
 
   <ion-content class="padding">
 		<div class="list">
+      <div class="list">
 
+      <label class="item item-input item-select">
+        <div class="input-label">
+          文章类别
+        </div>
+        <select ng-model="articleType">
+          <option ng-repeat="article in articles">{{article.title}}</option>
+        </select>
+      </label>
+
+    </div>
 			<label class="item item-input">
-				<input type="text" placeholder="标题" />
+				<input type="text" placeholder="标题" ng-model="articleTitle"/>
 			</label>
 			<label class="item item-input">
-				<textarea placeholder="文章内容" rows="10"></textarea>
+				<textarea placeholder="文章内容" rows="10" ng-model="articleContent"></textarea>
 			</label>
+
+
 			</div>
-			<button class="button button-block button-balanced">
+			<button class="button button-block button-balanced" ng-click="post(articleType, articleTitle, articleContent)">
 			  发表
 			</button>
 			<button class="button button-block button-positive">
 			  草稿
 			</button>
-
 				<!-- </section> -->
 			</ion-content>
 		</ion-view>

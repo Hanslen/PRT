@@ -12,11 +12,38 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute'])
   }
 })
 .controller('DashCtrl', function($scope, $sessionStorage, $location) {
-  console.log("Dash");
+
 })
-.controller('PostCtrl', function($scope){})
+.controller('PostCtrl', function($scope, Articles,$http, $location, $sessionStorage){
+  $scope.articles = Articles.all();
+  $scope.post = function(articleType, articleTitle, articleContent){
+    var categoryId = Articles.getId(articleType);
+    var username = $sessionStorage.user.username;
+    if(categoryId == null){
+      alert("请选择文章类别0.0");
+    }
+    else{
+      if(articleTitle == undefined || articleContent == undefined){
+        alert("标题和文章内容都不能为空0.0")
+      }
+      else{
+        var rates = $http({
+             method: 'GET',
+             url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent
+           }).success(function(data) {
+             if(data == '1'){
+               alert("发布成功！");
+                $location.path("/tab/articles");
+             }else{
+               alert("发布失败。。请检查网络或检查。。")
+             }
+          });
+      }
+    }
+
+  }
+})
 .controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location) {
-  console.log("Article");
   $scope.articles = Articles.all();
 })
 .controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http){

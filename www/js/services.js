@@ -106,6 +106,14 @@ angular.module('starter.services', [])
            }
          }
          return null;
+       },
+       getId: function(articleTitle){
+         for (var i = 0; i < articles.length; i++) {
+           if (articles[i].title === articleTitle) {
+             return articles[i].id;
+           }
+         }
+         return null;
        }
      };
 })
