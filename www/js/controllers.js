@@ -19,6 +19,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
   $scope.post = function(articleType, articleTitle, articleContent){
     var categoryId = Articles.getId(articleType);
     var username = $sessionStorage.user.username;
+    articleContent= articleContent.replace(/(\r)*\n/g,"<br />").replace(/\s/g," ");
     if(categoryId == null){
       alert("请选择文章类别0.0");
     }
