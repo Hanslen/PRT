@@ -1,0 +1,56 @@
+<ion-view view-title="关于TA">
+  <ion-content>
+    <ion-list>
+  <!-- has logged in -->
+  <div class="card">
+    <div class="item item-text-wrap">
+      <div class="item item-avatar">
+        <img src="{{chat.face}}">
+        <h2>{{chat.name}}</h2>
+      <p>已经加入PRT 1 年了，担任 {{chat.lastText}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="list card">
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-telephone"></i>
+      电话
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-email"></i>
+      邮箱
+    </a>
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-chatbubble"></i>
+      微信
+    </a>
+
+    <a href="#/tab/badge" class="item item-icon-left">
+      <i class="icon ion-ios-calendar"></i>
+      生日
+    </a>
+
+    <a href="#/tab/settings" class="item item-icon-left">
+      <i class="icon ion-ios-pricetags"></i>
+      TA的徽章
+    </a>
+
+
+    <a href="#" class="item item-icon-left">
+      <i class="icon ion-ios-person"></i>
+      TA的作品
+    </a>
+
+    <a ng-click="logOut()" class="item item-icon-left">
+      <i class="icon ion-trophy"></i>
+      TA的荣誉
+    </a>
+
+  </div>
+
+    </ion-list>
+  </ion-content>
+</ion-view>

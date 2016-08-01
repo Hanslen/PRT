@@ -78,6 +78,15 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         }
       }
     })
+    .state('tab.chatInfo', {
+        url: '/chats/:chatId',
+        views: {
+          'tab-chats': {
+            templateUrl: 'templates/chat-info.html',
+            controller: 'ChatDetailCtrl'
+          }
+        }
+      })
     .state('tab.article-list', {
       url: '/articles/:categoryId',
       views: {
