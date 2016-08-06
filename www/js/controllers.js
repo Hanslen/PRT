@@ -44,7 +44,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 
   }
 })
-.controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location) {
+.controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location, $sessionStorage) {
   $scope.articles = Articles.all();
 })
 .controller('ArticleDetailCtrl', function($scope, $stateParams, Articles, $location, $http, $sessionStorage){
@@ -72,15 +72,25 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
   // }
 })
 .controller('ArticleCommentCtrl', function($scope){})
-.controller('ChatsCtrl', function($scope, Chats, $sessionStorage, $location) {
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+.controller('ChatsCtrl', function($scope, $sessionStorage, $location, $http, $sessionStorage) {
+  // $scope.chats = Chats.all();
+  var rates = $http({
+       method: 'GET',
+       url: '  http://wolfprt.com/ionicServer/getUsers.php'
+     }).success(function(data) {
+        $scope.chats = data;
+        $sessionStorage.chats = data;
+    });
+
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ChatDetailCtrl', function($scope, $stateParams, $sessionStorage) {
+  for (var i = 0; i < $sessionStorage.chats.length; i++) {
+    if ($sessionStorage.chats[i].userId == $stateParams.chatId) {
+      $scope.chat = $sessionStorage.chats[i];
+      console.log($scope.chat);
+    }
+  }
 })
 
 .controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {

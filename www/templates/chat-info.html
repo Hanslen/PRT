@@ -5,9 +5,9 @@
   <div class="card">
     <div class="item item-text-wrap">
       <div class="item item-avatar">
-        <img src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-      <p>已经加入PRT 1 年了，担任 {{chat.lastText}}</p>
+        <img src="{{chat.icon}}">
+        <h2>{{chat.username}}</h2>
+      <p>已经加入PRT 1 年了，担任 {{chat.position}}</p>
       </div>
     </div>
   </div>
@@ -15,22 +15,22 @@
 
     <a href="#" class="item item-icon-left">
       <i class="icon ion-ios-telephone"></i>
-      电话
+      电话: {{chat.tele}}
     </a>
 
     <a href="#" class="item item-icon-left">
       <i class="icon ion-ios-email"></i>
-      邮箱
+      邮箱: {{chat.email}}
     </a>
 
     <a href="#" class="item item-icon-left">
       <i class="icon ion-ios-chatbubble"></i>
-      微信
+      微信: 暂无登记
     </a>
 
     <a href="#/tab/badge" class="item item-icon-left">
       <i class="icon ion-ios-calendar"></i>
-      生日
+      生日: {{chat.birthday}}
     </a>
 
     <a href="#/tab/settings" class="item item-icon-left">
