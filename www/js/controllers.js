@@ -94,20 +94,15 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 })
 
 .controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {
-  // $scope.logged = locals.get("logged");
-  // console.log($scope.logged);
-  // if($scope.logged == true){
-  //   $scope.user = locals.getObject("user");
-  // }else{
-  //   $scope.user = undefined;
-  // }
   $scope.user = $sessionStorage.user;
   // console.log("session: "+$sessionStorage.username);
   $scope.signIn = function(username, password){
+    $scope.loading = true;
     var rates = $http({
          method: 'GET',
          url: 'http://wolfprt.com/ionicServer/signIn.php?email='+username+'&password='+password
        }).success(function(data) {
+         $scope.loading = false;
          if(data["username"] == undefined){
            alert("密码错误QAQQ！");
          }else{
@@ -119,6 +114,10 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
           $scope.user = data;
           $location.path("/tab/account");
          }
+      }).error(function(data){
+        $scope.loading = false;
+        console.log("网断了。。。");
+        alert("网络问题。。登录失败。。。");
       });
   }
   $scope.logOut = function(){
@@ -126,5 +125,24 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
     delete $sessionStorage.user;
     $scope.user = undefined;
     alert("退出成功。：）如果要重新登录，请刷新网页._.");
+  }
+  $scope.changePass = function(newPass, newPassAgain){
+    $scope.loading = true;
+    if(newPass == newPassAgain){
+      var rates = $http({
+           method: 'GET',
+           url: 'http://wolfprt.com/ionicServer/updatePassword.php?email='+$sessionStorage.user.email+'&password='+newPass
+         }).success(function(data) {
+           alert("修改密码成功！");
+           $scope.loading = false;
+           $location.path("/tab/account");
+        }).error(function(data){
+          $scope.loading = false;
+          alert("网络问题。。更改失败。。");
+        });
+    }else {
+      $scope.loading = false;
+      alert("请输入相同的密码");
+    }
   }
 });
