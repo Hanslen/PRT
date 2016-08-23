@@ -143,6 +143,15 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       }
     }
   })
+  .state('tab.bug', {
+    url: '/bug',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-bug.html',
+        controller: 'AccountCtrl'
+      }
+    }
+  })
   ;
 
   // if none of the above states are matched, use this as the fallback

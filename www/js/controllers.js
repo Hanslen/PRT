@@ -95,7 +95,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 
 .controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {
   $scope.user = $sessionStorage.user;
-  // console.log("session: "+$sessionStorage.username);
+  // console.log("session: "+$sessionStorage.user);
   $scope.signIn = function(username, password){
     $scope.loading = true;
     var rates = $http({
@@ -110,8 +110,29 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
           // locals.set("logged", true);
           $scope.logged = true;
           $sessionStorage.user = data;
+          $sessionStorage.user.web_designer = parseInt($sessionStorage.user.web_designer);
+          $sessionStorage.user.proj_accom = parseInt($sessionStorage.user.proj_accom);
+          $sessionStorage.user.team_accom = parseInt($sessionStorage.user.team_accom);
+          $sessionStorage.user.book5 = parseInt($sessionStorage.user.book5);
+          $sessionStorage.user.video = parseInt($sessionStorage.user.video);
+          $sessionStorage.user.writing = parseInt($sessionStorage.user.writing);
+          $sessionStorage.user.newroute = parseInt($sessionStorage.user.newroute);
+          $sessionStorage.user.social = parseInt($sessionStorage.user.social);
+          $sessionStorage.user.organize = parseInt($sessionStorage.user.organize);
+          $sessionStorage.user.Captain = parseInt($sessionStorage.user.Captain);
+          $sessionStorage.user.Minster = parseInt($sessionStorage.user.Minster);
+          $sessionStorage.user.PACoor = parseInt($sessionStorage.user.PACoor);
+          $sessionStorage.user.ViceCaptain = parseInt($sessionStorage.user.ViceCaptain);
+          $sessionStorage.user.AE = parseInt($sessionStorage.user.AE);
+          $sessionStorage.user.DW = parseInt($sessionStorage.user.DW);
+          $sessionStorage.user.LR = parseInt($sessionStorage.user.LR);
+          $sessionStorage.user.PS = parseInt($sessionStorage.user.PS);
+          $sessionStorage.user.AI = parseInt($sessionStorage.user.AI);
+          $sessionStorage.user.FW = parseInt($sessionStorage.user.FW);
+          $sessionStorage.user.PR = parseInt($sessionStorage.user.PR);
+
           // locals.set("username",data.username);
-          $scope.user = data;
+          $scope.user = $sessionStorage.user;
           $location.path("/tab/account");
          }
       }).error(function(data){
