@@ -96,6 +96,12 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 .controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {
   $scope.user = $sessionStorage.user;
   // console.log("session: "+$sessionStorage.user);
+  // alert($location.search().openid);
+  if(!$sessionStorage.openid){
+    $sessionStorage.openid = $location.search().openid;
+    $sessionStorage.icon = $location.search().icon;
+    console.log($sessionStorage.openid);
+  }
   $scope.signIn = function(username, password){
     $scope.loading = true;
     var rates = $http({
@@ -138,7 +144,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
       }).error(function(data){
         $scope.loading = false;
         console.log("网断了。。。");
-        alert("网络问题。。登录失败。。。");
+        alert(data);
       });
   }
   $scope.logOut = function(){
@@ -165,5 +171,63 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
       $scope.loading = false;
       alert("请输入相同的密码");
     }
+  }
+  $scope.wechat = function(){
+    var rates = $http({
+         method: 'GET',
+         url: 'http://wolfprt.com/ionicServer/wechatbound.php?email='+$sessionStorage.user.email+'&openid='+$sessionStorage.openid+'&headimgurl='+$sessionStorage.icon
+       }).success(function(data) {
+         alert($sessionStorage.icon);
+         $scope.user.icon = $sessionStorage.icon;
+         $location.path("/tab/account");
+      }).error(function(data){
+        alert("网络问题。。绑定失败。。");
+      });
+  }
+  $scope.wechatSignIn = function(){
+    $scope.loading = true;
+    var rates = $http({
+         method: 'GET',
+         url: 'http://wolfprt.com/ionicServer/wechatSign.php?openid='+$sessionStorage.openid
+       }).success(function(data) {
+         $scope.loading = false;
+         if(data["username"] == undefined){
+           alert("该微信还未绑定任何帐户！");
+         }else{
+          // locals.setObject("user", data);
+          // locals.set("logged", true);
+          alert("登录成功!");
+          $scope.logged = true;
+          $sessionStorage.user = data;
+          $sessionStorage.user.web_designer = parseInt($sessionStorage.user.web_designer);
+          $sessionStorage.user.proj_accom = parseInt($sessionStorage.user.proj_accom);
+          $sessionStorage.user.team_accom = parseInt($sessionStorage.user.team_accom);
+          $sessionStorage.user.book5 = parseInt($sessionStorage.user.book5);
+          $sessionStorage.user.video = parseInt($sessionStorage.user.video);
+          $sessionStorage.user.writing = parseInt($sessionStorage.user.writing);
+          $sessionStorage.user.newroute = parseInt($sessionStorage.user.newroute);
+          $sessionStorage.user.social = parseInt($sessionStorage.user.social);
+          $sessionStorage.user.organize = parseInt($sessionStorage.user.organize);
+          $sessionStorage.user.Captain = parseInt($sessionStorage.user.Captain);
+          $sessionStorage.user.Minster = parseInt($sessionStorage.user.Minster);
+          $sessionStorage.user.PACoor = parseInt($sessionStorage.user.PACoor);
+          $sessionStorage.user.ViceCaptain = parseInt($sessionStorage.user.ViceCaptain);
+          $sessionStorage.user.AE = parseInt($sessionStorage.user.AE);
+          $sessionStorage.user.DW = parseInt($sessionStorage.user.DW);
+          $sessionStorage.user.LR = parseInt($sessionStorage.user.LR);
+          $sessionStorage.user.PS = parseInt($sessionStorage.user.PS);
+          $sessionStorage.user.AI = parseInt($sessionStorage.user.AI);
+          $sessionStorage.user.FW = parseInt($sessionStorage.user.FW);
+          $sessionStorage.user.PR = parseInt($sessionStorage.user.PR);
+
+          // locals.set("username",data.username);
+          $scope.user = $sessionStorage.user;
+          $location.path("/tab/account");
+         }
+      }).error(function(data){
+        $scope.loading = false;
+        console.log("网断了。。。");
+        alert(data);
+      });
   }
 });

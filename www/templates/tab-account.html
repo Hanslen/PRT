@@ -14,6 +14,11 @@
       <button class="button button-positive" style="margin-left:35%;width:30%" ng-click="signIn(username, password)">
         登录＝w＝
       </button>
+      <br/><br/>
+      <br/><br/>
+      <button class="button button-balanced" style="margin-left:25%;width:50%" ng-click="wechatSignIn()">
+        微信一键登录
+      </button>
       <img src="img/loading.gif" style="width:40%;margin-left:30%;margin-top:5%" ng-if="loading"/>
   </div>
 
@@ -64,6 +69,10 @@
       更换头像
     </a> -->
 
+    <a href="#" class="item item-icon-left" ng-click="wechat()">
+      <i class="icon ion-social-whatsapp"></i>
+      绑定微信（请确保在微信浏览器中打开）
+    </a>
     <a href="#/tab/settings" class="item item-icon-left">
       <i class="icon ion-ios-locked"></i>
       我的设置
