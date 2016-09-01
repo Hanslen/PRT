@@ -18,7 +18,7 @@
 				<input type="text" placeholder="标题" ng-model="articleTitle"/>
 			</label>
 			<label class="item item-input">
-				<textarea placeholder="文章内容" rows="5" ng-model="articleContent"></textarea>
+				<textarea placeholder="文章内容" rows="17" ng-model="articleContent" style="overflow:auto;-webkit-overflow-scrolling;"></textarea>
 			</label>
 
 
@@ -26,8 +26,8 @@
 			<button class="button button-block button-balanced" ng-click="post(articleType, articleTitle, articleContent)">
 			  发表
 			</button>
-			<button class="button button-block button-positive">
-			  草稿（该功能暂不开放）
+			<button class="button button-block button-positive" ng-click="draft(articleType, articleTitle, articleContent)">
+			  草稿
 			</button>
 				<!-- </section> -->
 			</ion-content>

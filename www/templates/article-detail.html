@@ -11,7 +11,7 @@
 
   <div class="item item-avatar">
     <img src={{selectPost.image}}>
-    <h2>{{selectPost.author}}</h2>
+    <h2>{{selectPost.name}}</h2>
     <p>{{selectPost.postDate}}</p>
   </div>
 
@@ -27,6 +27,9 @@
 </div>
 
 <!-- comment -->
+<button class="button button-full button-balanced" ng-click="collect()">
+  收藏
+</button>
 <button class="button button-full button-positive" ng-click="comment()">
   发表评论（该功能暂不可用）
 </button>

@@ -151,6 +151,42 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         controller: 'AccountCtrl'
       }
     }
+  })
+  .state('tab.mystory', {
+    url: '/mystory',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-mystory.html',
+        controller: 'MystoryCtrl'
+      }
+    }
+  })
+  .state('tab.collections', {
+    url: '/collections',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-collections.html',
+        controller: 'MycollectionsCtrl'
+      }
+    }
+  })
+  .state('tab.draftlist', {
+    url: '/draftlist',
+    views: {
+      'tab-account': {
+        templateUrl: 'templates/account-draftlist.html',
+        controller: 'MydraftCtrl'
+      }
+    }
+  })
+  .state('tab.draft', {
+    url: '/draftlist/:categoryId/:articleId',
+    views: {
+      'tab-articles': {
+        templateUrl: 'templates/article-post.html',
+        controller: 'PostCtrl'
+      }
+    }
   });
 
   // if none of the above states are matched, use this as the fallback

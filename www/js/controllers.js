@@ -14,11 +14,21 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
 .controller('DashCtrl', function($scope, $sessionStorage, $location) {
 
 })
-.controller('PostCtrl', function($scope, Articles,$http, $location, $sessionStorage){
+.controller('PostCtrl', function($scope, Articles,$http, $location, $sessionStorage, $stateParams){
   $scope.articles = Articles.all();
+  if($stateParams.articleId != null){
+      for(var i = 0; i < $sessionStorage.mydrafts.length; i++){
+          if($sessionStorage.mydrafts[i].articleId == $stateParams.articleId){
+            $scope.articleType = Articles.get($sessionStorage.mydrafts[i].categoryId).title;
+            $scope.articleTitle = $sessionStorage.mydrafts[i].title;
+            $scope.articleContent = $sessionStorage.mydrafts[i].content;
+
+          }
+      }
+  }
   $scope.post = function(articleType, articleTitle, articleContent){
     var categoryId = Articles.getId(articleType);
-    var username = $sessionStorage.user.username;
+    var username = $sessionStorage.user.email;
     articleContent= articleContent.replace(/(\r)*\n/g,"<br />").replace(/\s/g," ");
     if(categoryId == null){
       alert("请选择文章类别0.0");
@@ -30,18 +40,43 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
       else{
         var rates = $http({
              method: 'GET',
-             url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent
+             url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent+'&name='+$sessionStorage.user.username+'&icon='+$sessionStorage.user.icon+"&draft=0"
            }).success(function(data) {
              if(data == '1'){
                alert("发布成功！");
                 $location.path("/tab/articles");
              }else{
-               alert("发布失败。。请检查网络或检查。。")
+               alert("发布失败。。可能是因为网络的关系。。")
              }
           });
       }
     }
-
+  }
+  $scope.draft = function(articleType, articleTitle, articleContent){
+    var categoryId = Articles.getId(articleType);
+    var username = $sessionStorage.user.email;
+    articleContent= articleContent.replace(/(\r)*\n/g,"<br />").replace(/\s/g," ");
+    if(categoryId == null){
+      alert("请选择文章类别0.0");
+    }
+    else{
+      if(articleTitle == undefined || articleContent == undefined){
+        alert("标题和文章内容都不能为空0.0")
+      }
+      else{
+        var rates = $http({
+             method: 'GET',
+             url: 'http://wolfprt.com/ionicServer/postArticle.php?author='+username+'&categoryId='+categoryId+'&title='+articleTitle+'&content='+articleContent+'&name='+$sessionStorage.user.username+'&icon='+$sessionStorage.user.icon+"&draft=1"
+           }).success(function(data) {
+             if(data == '1'){
+               alert("储存成功！请在我的草稿内查看！");
+                $location.path("/tab/articles");
+             }else{
+               alert("储存失败。。可能是因为网络的关系。。")
+             }
+          });
+      }
+    }
   }
 })
 .controller('ArticleCtrl', function($scope, Articles, $sessionStorage, $location, $sessionStorage) {
@@ -56,16 +91,94 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
        method: 'GET',
        url: 'http://wolfprt.com/ionicServer/getArticleList.php?categoryId='+$stateParams.categoryId
      }).success(function(data) {
-      //  console.log(data);
+       console.log(data);
        $sessionStorage.serverPosts = data;
        $scope.serverPosts = data;
     });
 })
-.controller('ArticleDetailInfoCtrl', function($scope, $stateParams, $location, $sessionStorage){
+.controller('MystoryCtrl', function($scope, Articles, $location, $http, $sessionStorage){
+  $scope.turntopost = function(){
+    $location.path("/tab/post");
+  }
+  $scope.getPost = function(categoryId,articleId){
+    $location.path("/tab/articles/"+categoryId+"/"+articleId);
+  };
+  var rates = $http({
+       method: 'GET',
+       url: 'http://wolfprt.com/ionicServer/mystory.php?email='+$sessionStorage.user.email
+     }).success(function(data) {
+       $sessionStorage.mystories = data;
+       $scope.mystories = data;
+       if(data.length == 0){
+         $scope.nostory = 1;
+       }
+    });
+})
+.controller('MydraftCtrl', function($scope, Articles, $location, $http, $sessionStorage){
+  $scope.turntopost = function(){
+    $location.path("/tab/post");
+  }
+  $scope.getDraft = function(categoryId,articleId){
+    $location.path("/tab/draftlist/"+categoryId+"/"+articleId);
+  };
+  var rates = $http({
+       method: 'GET',
+       url: 'http://wolfprt.com/ionicServer/getDraft.php?email='+$sessionStorage.user.email
+     }).success(function(data) {
+       $sessionStorage.mydrafts = data;
+       $scope.mydrafts = data;
+       if(data.length == 0){
+         $scope.nostory = 1;
+       }
+    });
+})
+.controller('MycollectionsCtrl', function($scope, Articles, $location, $http, $sessionStorage){
+  $scope.turntocollection = function(){
+    $location.path("/tab/articles");
+  }
+  $scope.getPost = function(categoryId,articleId){
+    $location.path("/tab/articles/"+categoryId+"/"+articleId);
+  };
+  var rates = $http({
+       method: 'GET',
+       url: 'http://wolfprt.com/ionicServer/mycollections.php?email='+$sessionStorage.user.email
+     }).success(function(data) {
+       if(data.length == 0){
+         $scope.nostory = 1;
+       }
+       $sessionStorage.mycollections =[];
+       $scope.mycollections = [];
+       for(var i = 0; i < data.length; i++){
+         var con = $http({
+              method: 'GET',
+              url: 'http://wolfprt.com/ionicServer/idcollections.php?articleId='+data[i].articleId
+            }).success(function(data) {
+              $sessionStorage.mycollections.push(data[0]);
+              $scope.mycollections.push(data[0]);
+              console.log(data);
+           }).error(function(data){
+             console.log(data);
+           });
+       }
+    }).error(function(data){
+      console.log("网络连接中断了。。。");
+    });
+})
+.controller('ArticleDetailInfoCtrl', function($http, $scope, $stateParams, $location, $sessionStorage){
     for (var i = 0; i < $sessionStorage.serverPosts.length; i++) {
       if ($sessionStorage.serverPosts[i].articleId == $stateParams.articleId) {
           $scope.selectPost = $sessionStorage.serverPosts[i];
       }
+    }
+    $scope.collect = function(){
+      var rates = $http({
+           method: 'GET',
+           url: 'http://wolfprt.com/ionicServer/collect.php?email='+$sessionStorage.user.email+'&categoryId='+$stateParams.categoryId+'&articleId='+$stateParams.articleId
+         }).success(function(data) {
+           alert("收藏成功！");
+        }).error(function(data){
+          alert("网络问题，收藏失败。。。");
+        });
     }
   // $scope.comment = function(){
   //   $location.path("/tab/articles/comment/"+$stateParams.categoryId+"/0");
@@ -100,7 +213,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
   if(!$sessionStorage.openid){
     $sessionStorage.openid = $location.search().openid;
     $sessionStorage.icon = $location.search().icon;
-    console.log($sessionStorage.openid);
+    // console.log($sessionStorage.openid);
   }
   $scope.signIn = function(username, password){
     $scope.loading = true;
@@ -177,7 +290,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
          method: 'GET',
          url: 'http://wolfprt.com/ionicServer/wechatbound.php?email='+$sessionStorage.user.email+'&openid='+$sessionStorage.openid+'&headimgurl='+$sessionStorage.icon
        }).success(function(data) {
-         alert($sessionStorage.icon);
+         alert("绑定成功！！");
          $scope.user.icon = $sessionStorage.icon;
          $location.path("/tab/account");
       }).error(function(data){
@@ -221,7 +334,7 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
           $sessionStorage.user.PR = parseInt($sessionStorage.user.PR);
 
           // locals.set("username",data.username);
-          $scope.user = $sessionStorage.user;
+          $scope.user = data;
           $location.path("/tab/account");
          }
       }).error(function(data){
