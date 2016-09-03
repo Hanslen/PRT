@@ -1,16 +1,19 @@
 <ion-view view-title="类别">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="article in articles" type="item-text-wrap" href="#/tab/articles/{{article.id}}">
+      <div ng-repeat="article in articles">
+        <div style="height:15px;background-color: rgb(240, 239, 245);"></div>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#/tab/articles/{{article.id}}" style="width:94%;margin-left:3%">
         <img ng-src="{{article.image}}">
-        <h2>{{article.title}}</h2>
-        <p>{{article.read}} 次浏览 · {{article.focus}} 人关注</p>
+        <h2 style="margin-top:4%">{{article.title}}</h2>
+        <!-- <p>{{article.read}} 次浏览 · {{article.focus}} 人关注</p> -->
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <!-- <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
         </ion-option-button> -->
       </ion-item>
+    </div>
     </ion-list>
   </ion-content>
 </ion-view>
