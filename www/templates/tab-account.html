@@ -1,7 +1,7 @@
 <ion-view view-title="PRT内部人员通道">
   <ion-content>
     <ion-list>
-      <div ng-if="!user">
+      <div ng-if="!user">  
         <!-- has not logged in -->
         <div class="list list-inset" style="margin-top:10%">
         <label class="item item-input">
@@ -19,8 +19,10 @@
       <button class="button button-balanced" style="margin-left:25%;width:50%" ng-click="wechatSignIn()">
         微信一键登录
       </button>
-      <img src="img/loading.gif" style="width:40%;margin-left:30%;margin-top:5%" ng-if="loading"/>
-  </div>
+      <br/><br/><br/>
+      <ion-spinner icon="lines" class="spinner-calm" style="width:100%;margin-left:45%;margin-top:5%" ng-if="loading"/></ion-spinner>
+      <!-- <img src="img/loading.gif" style="width:40%;margin-left:30%;margin-top:5%" ng-if="loading"/> -->
+      </div>
 
 
   <!-- has logged in -->

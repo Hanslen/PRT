@@ -91,7 +91,10 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
        method: 'GET',
        url: 'http://wolfprt.com/ionicServer/getArticleList.php?categoryId='+$stateParams.categoryId
      }).success(function(data) {
-       console.log(data);
+       if(data.length == 0){
+         alert("该类别暂无文章QAQ,请查看别的分类！");
+         $location.path("/tab/articles");
+       }
        $sessionStorage.serverPosts = data;
        $scope.serverPosts = data;
     });

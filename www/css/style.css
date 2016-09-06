@@ -32,3 +32,22 @@ ion-view.pane{
 .button.button.back-button.buttons.button-clear.header-item{
   color:white;
 }
+
+#load{
+  text-align: center;
+  height:100%;
+  width:100%;
+  background-color:rgba(102, 206, 255, 1);
+  /* background-color: rgba(233, 233, 232, 1); */
+  color:white;
+  z-index:100;
+  float:left;
+  position:fixed;
+  top:0;
+  left:0;
+  display: block;
+}
+#load img{
+  width:100%;
+  margin: 0 auto;
+}
