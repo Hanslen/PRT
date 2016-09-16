@@ -209,7 +209,24 @@ angular.module('starter.controllers', ['ngStorage', 'ngRoute','ngSanitize'])
   }
 })
 
-.controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route) {
+.controller('AccountCtrl', function($scope, Account, $http, $location, locals, $sessionStorage, $route, $timeout, $ionicLoading) {
+  // 
+  // // Setup the loader
+  //  $ionicLoading.show({
+  //    content: 'Loading',
+  //    animation: 'fade-in',
+  //    showBackdrop: true,
+  //    maxWidth: 200,
+  //    showDelay: 0
+  //  });
+  //
+  //  // Set a timeout to clear loader, however you would actually call the $ionicLoading.hide(); method whenever everything is ready or loaded.
+  //  $timeout(function () {
+  //    $ionicLoading.hide();
+  //   //  $scope.stooges = [{name: 'Moe'}, {name: 'Larry'}, {name: 'Curly'}];
+  //  }, 2000);
+
+
   $scope.user = $sessionStorage.user;
   // console.log("session: "+$sessionStorage.user);
   // alert($location.search().openid);
